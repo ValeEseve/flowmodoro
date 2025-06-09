@@ -1,5 +1,5 @@
 import './App.css'
-import Pomodoro from './components/Pomodoro'
+import Pomodoro2 from './components/Pomodoro'
 import Timer from './components/Timer'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       {/* <Timer /> */}
-      <Pomodoro />
+      <Pomodoro2 />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect } from 'react'
 
 const Pomodoro = () => {
     // Variables
@@ -6,8 +6,8 @@ const Pomodoro = () => {
     let [timerOn, setTimerOn] = useState(false)
     const [convertedTime, setConvertedTime] = useState("")
     const [countUp, setCountUp] = useState(0)
-    const [timeUp, setTimeUp] = useState("")
-    const [timeUpOn, setTimeUoOn] = useState(0)
+    const [countUp2, setCountUp2] = useState(0)
+    const [timeUpConverted, setTimeUpConverted] = useState("")
 
     // Emojis
     const timerOnEmoji = "▶️"
@@ -39,6 +39,19 @@ const Pomodoro = () => {
         setConvertedTime(convTime)
     }
 
+     const milToMin2 = (miliseconds) => {
+        const toConvert = miliseconds
+
+        const seconds = toConvert / 1000
+        const minutes = seconds / 60
+
+        const secLeft = Math.floor(seconds % 60)
+        const minLeft = Math.floor(minutes % 60)
+
+        const convTime = (minLeft.toString().padStart(2, "00")) + ":" + (secLeft.toString().padStart(2, "00"))
+        return setConvertedTime(convTime)
+    }
+
     // Switch para inciar cronómetro
 
     const timePlay = () => {
@@ -62,9 +75,11 @@ useEffect(() => {
                 setTimerOn(false)
                 return 0
             }
-            setTimeUp
-            setCountUp
-            return timeUp
+            setCountUp2(prev + 1000)
+            const countUpTemp = milToMin2(countUp)
+            setCountUp2(countUpTemp)
+            return setCountUp(prev + 1000)
+        
         })
     }, 1000)
     return () => {
@@ -75,7 +90,7 @@ useEffect(() => {
 
     return (
         <div>
-            <h1>Tiempo: {countUp && <p>{countUp}</p>}</h1>
+            <h1>Tiempo: {countUp2 && <p>{countUp2}</p>}</h1>
             <h3>Tiempo en milisegundos {time}</h3>
 
             <button onClick={timePlay} style={{ fontSize: "60px", padding: "0px" }}>{timerOn ? timerOffEmoji : timerOnEmoji}</button>
