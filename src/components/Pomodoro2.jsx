@@ -4,9 +4,10 @@ const Pomodoro2 = () => {
   // Variables
   const [inputValue, setInputValue] = useState(10)
   const [inputConv, setInputConv] = useState(0)
-  const [countUp, setCountUp] = useState(0)
+  const [countUp, setCountUp] = useState(59000)
   const [convHour, setConvHour] = useState("")
   const [timerOn, setTimerOn] = useState(false)
+  const [mensaje, setMensaje] = useState("")
 
   // Emojis
   const timerOnEmoji = "▶️"
@@ -44,9 +45,8 @@ const Pomodoro2 = () => {
       setCountUp((prev) => {
         if (prev >= inputConv) {
           setTimerOn(false)
-          clearInterval(interval)
           setCountUp(0)
-          console.log(countUp)
+          setMensaje("¡Pomodoro terminado!")
           return prev
         }
         return (prev + 1000)
@@ -60,16 +60,16 @@ const Pomodoro2 = () => {
 
   useEffect(() => {
     setConvHour(milToHour(countUp))
-    console.log(countUp+"countUp dentro del segundo useEffect")
   }, [countUp])
 
   return (
-    <div>
+    <div id='render'>
+      <h2>{mensaje && mensaje}</h2>
       {/* Mostrar convHour */}
       <h3>{convHour && convHour}</h3>
       {/* Boton play timerPlay*/}
-      <button onClick={timerPlay} style={{ fontSize: "60px", padding: "0px" }}>{timerOn ? timerOffEmoji : timerOnEmoji}</button>
-      <input type="number" onChange={minToMil} value={inputValue} placeholder='Introduzca mins' />
+      <button id='btn-min' onClick={timerPlay} style={{ fontSize: "60px", padding: "0px" }}>{timerOn ? timerOffEmoji : timerOnEmoji}</button>
+      <input id='input-min' type="number" onChange={minToMil} value={inputValue} placeholder='Introduzca mins' />
     </div>
   )
 }
