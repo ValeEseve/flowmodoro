@@ -1,12 +1,10 @@
 import './App.css'
-import Pomodoro2 from './components/Pomodoro'
-import Timer from './components/Timer'
+import Pomodoro2 from './components/Pomodoro2'
 
 function App() {
 
   return (
     <>
-      {/* <Timer /> */}
       <Pomodoro2 />
     </>
   )
