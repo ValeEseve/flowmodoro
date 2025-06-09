@@ -1,11 +1,18 @@
-import { useEffect, useState } from "react"
+import { useState, useEffect } from 'react'
 
-const Timer = () => {
-    const [time, setTime] = useState(90000)
+const Pomodoro = () => {
+    const [time, setTime] = useState(0)
     let [timerOn, setTimerOn] = useState(false)
     const [convertedTime, setConvertedTime] = useState("")
+    // Inputs
     const [inputValue, setInputValue] = useState("")
+    const [inputMin, setInputMin] = useState("")
 
+    const convMinToMil = (event) => {
+        const toConvert = event.target.value
+        const mins = toConvert * 60000
+        setTime(mins)
+    }
 
     const timerOnEmoji = "▶️"
     const timerOffEmoji = "⏸️"
@@ -49,16 +56,20 @@ const Timer = () => {
         }, 1000)
         return () => { clearInterval(intervalo) }
     }, [timerOn])
-
-    return (
-        <div>
-            <h1>Tiempo restante: {parseFloat(time / 1000)} segundos</h1>
+  return (
+    <div>
+      <h1>Tiempo restante: {convertedTime && convertedTime}</h1>
+        <h3>Tiempo en milisegundos {time}</h3>
+            
             <button onClick={timePlay} style={{ fontSize: "60px", padding: "0px" }}>{timerOn ? timerOffEmoji : timerOnEmoji}</button>
+            <br />
             <button onClick={addTime} style={{ backgroundColor: "chocolate" }}>Añadir 1 segundo</button>
+            <br />
             <input type="number" id="convert-milsec" value={inputValue} onChange={milToMin} placeholder="Ingresa milisegundos" />
-            {convertedTime && <p>{convertedTime}</p>}
-        </div>
-    )
+            <br />
+            <input type="number" id='convert-to-milsec' placeholder='Min' value={inputMin} onChange={convMinToMil}/>
+    </div>
+  )
 }
 
-export default Timer
+export default Pomodoro
